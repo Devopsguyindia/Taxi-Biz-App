@@ -1,0 +1,42 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import VehicleCard from '../components/VehicleCard.astro';
+import { siteConfig } from '../site-config';
+
+const seoPage = siteConfig.seo.pages.fleet;
+const title = `${seoPage.title} | ${siteConfig.businessName}`;
+const description = seoPage.description;
+const keywords = seoPage.keywords;
+
+const jsonLd = {
+	'@context': 'https://schema.org',
+	'@type': 'ItemList',
+	name: 'Taxi Fleet',
+	itemListElement: siteConfig.fleet.map((vehicle, index) => ({
+		'@type': 'ListItem',
+		position: index + 1,
+		name: `${vehicle.name} - ${vehicle.type}`,
+	})),
+};
+---
+
+<BaseLayout title={title} description={description} keywords={keywords} path={seoPage.path} jsonLd={jsonLd}>
+	<section class="section container">
+		<h1>Our Vehicles</h1>
+		<p class="muted">Well-maintained options for solo travelers, families, and corporate bookings.</p>
+		<div class="grid cards-3">
+			{
+				siteConfig.fleet.map((vehicle) => (
+					<VehicleCard
+						name={vehicle.name}
+						type={vehicle.type}
+						passengerInfo={vehicle.passengerInfo}
+						icon={vehicle.icon}
+						imageUrl={vehicle.imageUrl}
+						imageAlt={vehicle.imageAlt}
+					/>
+				))
+			}
+		</div>
+	</section>
+</BaseLayout>

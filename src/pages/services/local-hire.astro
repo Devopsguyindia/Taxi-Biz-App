@@ -1,0 +1,46 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { siteConfig } from '../../site-config';
+
+const seoPage = siteConfig.seo.pages.localHire;
+const title = `${seoPage.title} | ${siteConfig.businessName}`;
+const description = seoPage.description;
+const keywords = seoPage.keywords;
+
+const jsonLd = {
+	'@context': 'https://schema.org',
+	'@type': 'Service',
+	serviceType: 'Local taxi hire',
+	provider: {
+		'@type': 'TaxiService',
+		name: siteConfig.businessName,
+	},
+	areaServed: ['Pune'],
+};
+---
+
+<BaseLayout title={title} description={description} keywords={keywords} path={seoPage.path} jsonLd={jsonLd}>
+	<section class="section container">
+		<h1>Local Hire Package</h1>
+		<p class="muted">
+			Local hire is ideal for city meetings, shopping routes, and personal travel with flexible stops.
+		</p>
+		<div class="grid cards-3">
+			<article class="card">
+				<h2>Flexible start point</h2>
+				<p>Choose pickup from home, hotel, office, or airport.</p>
+			</article>
+			<article class="card">
+				<h2>Driver with route support</h2>
+				<p>Experienced local drivers help optimize city travel time.</p>
+			</article>
+			<article class="card">
+				<h2>Vehicle options</h2>
+				<p>Innova, Ertiga, and Swift Dzire available based on comfort and budget.</p>
+			</article>
+		</div>
+		<p>
+			<a class="btn btn-primary" href="/contact/">Get local hire quote</a>
+		</p>
+	</section>
+</BaseLayout>

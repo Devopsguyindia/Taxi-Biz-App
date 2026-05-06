@@ -1,0 +1,50 @@
+---
+import { siteConfig } from '../site-config';
+---
+
+<form class="card" action={siteConfig.formEndpoint} method="POST">
+	<h2>Quick Enquiry</h2>
+	<p class="muted">We will contact you shortly with fare details.</p>
+	<input type="hidden" name="_subject" value="New taxi enquiry from website" />
+	<p>
+		<label for="name">Name</label><br />
+		<input id="name" name="name" type="text" required />
+	</p>
+	<p>
+		<label for="phone">Phone</label><br />
+		<input id="phone" name="phone" type="tel" required />
+	</p>
+	<p>
+		<label for="pickup">Pickup</label><br />
+		<input id="pickup" name="pickup" type="text" required />
+	</p>
+	<p>
+		<label for="drop">Drop</label><br />
+		<input id="drop" name="drop" type="text" required />
+	</p>
+	<p>
+		<label for="datetime">Date and Time</label><br />
+		<input id="datetime" name="datetime" type="datetime-local" />
+	</p>
+	<p>
+		<label for="packageType">Package</label><br />
+		<select id="packageType" name="packageType">
+			<option>Airport Pickup / Drop</option>
+			<option>Local Hire</option>
+			<option>Mumbai Return Package</option>
+		</select>
+	</p>
+	<p>
+		<label for="vehicle">Vehicle Preference</label><br />
+		<select id="vehicle" name="vehicle">
+			<option>Toyota Innova - SUV</option>
+			<option>Maruti Ertiga - MUV</option>
+			<option>Swift Dzire - Sedan</option>
+		</select>
+	</p>
+	<p>
+		<label for="message">Message</label><br />
+		<textarea id="message" name="message" rows={4}></textarea>
+	</p>
+	<button class="btn btn-primary" type="submit">Send enquiry</button>
+</form>

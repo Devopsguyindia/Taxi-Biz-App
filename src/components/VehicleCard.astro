@@ -1,0 +1,28 @@
+---
+interface Props {
+	name: string;
+	type: string;
+	passengerInfo: string;
+	icon?: string;
+	imageUrl?: string;
+	imageAlt?: string;
+}
+
+const { name, type, passengerInfo, icon = '🚘', imageUrl, imageAlt } = Astro.props;
+---
+
+<article class="card">
+	<div class="icon-chip" aria-hidden="true">{icon} {type}</div>
+	<div class="vehicle-visual" aria-hidden={imageUrl ? undefined : 'true'}>
+		{
+			imageUrl ? (
+				<img src={imageUrl} alt={imageAlt || `${name} ${type}`} loading="lazy" />
+			) : (
+				<span class="vehicle-emoji">{icon}</span>
+			)
+		}
+	</div>
+	<h3>{name}</h3>
+	<p><strong>Category:</strong> {type}</p>
+	<p class="muted">{passengerInfo}</p>
+</article>

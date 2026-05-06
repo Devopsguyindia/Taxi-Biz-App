@@ -1,0 +1,27 @@
+---
+import { siteConfig } from '../site-config';
+---
+
+<footer class="site-footer">
+	<div class="container grid cards-3">
+		<section>
+			<h2>{siteConfig.businessName}</h2>
+			<p class="muted">
+				Trusted cab service for airport transfers, local rides, and Mumbai return trips.
+			</p>
+		</section>
+		<section>
+			<h2>Contact</h2>
+			<p>
+				<a href={`tel:${siteConfig.phoneHref}`}>{siteConfig.phoneDisplay}</a>
+			</p>
+			<p>
+				<a href={`https://wa.me/${siteConfig.whatsappNumber}`}>WhatsApp chat</a>
+			</p>
+		</section>
+		<section>
+			<h2>Service Areas</h2>
+			<p>{siteConfig.serviceAreas.join(', ')}</p>
+		</section>
+	</div>
+</footer>

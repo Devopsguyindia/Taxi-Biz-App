@@ -1,0 +1,149 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PackageCard from '../components/PackageCard.astro';
+import VehicleCard from '../components/VehicleCard.astro';
+import ContactForm from '../components/ContactForm.astro';
+import { siteConfig } from '../site-config';
+
+const seoPage = siteConfig.seo.pages.home;
+const title = `${seoPage.title} | ${siteConfig.businessName}`;
+const description = seoPage.description;
+const keywords = seoPage.keywords;
+
+const jsonLd = [
+	{
+		'@context': 'https://schema.org',
+		'@type': 'TaxiService',
+		name: siteConfig.businessName,
+		url: siteConfig.siteUrl,
+		telephone: siteConfig.phoneDisplay,
+		areaServed: siteConfig.serviceAreas,
+		priceRange: siteConfig.priceRange,
+		address: {
+			'@type': 'PostalAddress',
+			addressLocality: siteConfig.addressLocality,
+			addressRegion: siteConfig.addressRegion,
+			addressCountry: 'IN',
+		},
+	},
+	{
+		'@context': 'https://schema.org',
+		'@type': 'FAQPage',
+		mainEntity: seoPage.faq.map((item) => ({
+			'@type': 'Question',
+			name: item.question,
+			acceptedAnswer: {
+				'@type': 'Answer',
+				text: item.answer,
+			},
+		})),
+	},
+];
+---
+
+<BaseLayout title={title} description={description} keywords={keywords} path="/" jsonLd={jsonLd}>
+	<section class="hero container section-shell" id="home">
+		<p class="hero-kicker">{seoPage.heroKicker}</p>
+		<h1>{seoPage.heroTitle}</h1>
+		<p class="muted">
+			{seoPage.heroDescription}
+		</p>
+		<div class="hero-cta">
+			<a class="btn btn-primary" href={`tel:${siteConfig.phoneHref}`}>Call {siteConfig.phoneDisplay}</a>
+			<a class="btn btn-whatsapp" href={`https://wa.me/${siteConfig.whatsappNumber}`}>Chat on WhatsApp</a>
+			<a class="btn btn-secondary" href="#contact">Get fare quote</a>
+		</div>
+		<div class="grid hero-stats">
+			<article class="card">
+				<h3>Airport Specialists</h3>
+				<p class="muted">Day and night Pune Airport transfers with punctual pickups.</p>
+			</article>
+			<article class="card">
+				<h3>Intercity Ready</h3>
+				<p class="muted">Pune-Mumbai and New Mumbai routes with comfortable fleet options.</p>
+			</article>
+		</div>
+	</section>
+
+	<section class="section container section-shell" id="packages">
+		<h2>Our taxi packages</h2>
+		<div class="grid cards-3">
+			{
+				siteConfig.packages.map((pkg) => (
+					<PackageCard title={pkg.title} slug={pkg.slug} highlights={pkg.highlights} />
+				))
+			}
+		</div>
+	</section>
+
+	<section class="section container section-shell" id="routes">
+		<h2>Popular route matrix</h2>
+		<div class="grid route-grid">
+			<article class="card route-item">
+				<h3>Airport Flow</h3>
+				<p class="muted">Pune Airport - Day Hrs / Night Hrs</p>
+			</article>
+			<article class="card route-item">
+				<h3>Intercity Core</h3>
+				<p class="muted">Pune - Mumbai / Mumbai - Pune</p>
+			</article>
+			<article class="card route-item">
+				<h3>Extended Metro</h3>
+				<p class="muted">Pune - New Mumbai / New Mumbai - Pune</p>
+			</article>
+			<article class="card route-item">
+				<h3>City Essentials</h3>
+				<p class="muted">Local hire for office, business, and personal city movement.</p>
+			</article>
+		</div>
+	</section>
+
+	<section class="section container section-shell" id="fleet">
+		<h2>Vehicle options</h2>
+		<div class="grid cards-3">
+			{
+				siteConfig.fleet.map((vehicle) => (
+					<VehicleCard
+						name={vehicle.name}
+						type={vehicle.type}
+						passengerInfo={vehicle.passengerInfo}
+						icon={vehicle.icon}
+						imageUrl={vehicle.imageUrl}
+						imageAlt={vehicle.imageAlt}
+					/>
+				))
+			}
+		</div>
+	</section>
+
+	<section class="section container section-shell" id="faq">
+		<h2>Frequently asked questions</h2>
+		<div class="grid">
+			{
+				seoPage.faq.map((item) => (
+					<article class="card">
+						<h3>{item.question}</h3>
+						<p>{item.answer}</p>
+					</article>
+				))
+			}
+		</div>
+	</section>
+
+	<section class="section container section-shell" id="contact">
+		<h2>Contact</h2>
+		<p class="muted">
+			Use quick actions for instant booking by call or WhatsApp.
+		</p>
+		<div class="hero-cta">
+			<a class="btn btn-primary" href={`tel:${siteConfig.phoneHref}`}>Call {siteConfig.phoneDisplay}</a>
+			<a class="btn btn-whatsapp" href={`https://wa.me/${siteConfig.whatsappNumber}`}>WhatsApp</a>
+		</div>
+	</section>
+
+	<section class="section container section-shell" id="enquiry">
+		<h2>Enquiry</h2>
+		<p class="muted">Share trip details and we will call you back with availability and fare.</p>
+		<ContactForm />
+	</section>
+</BaseLayout>

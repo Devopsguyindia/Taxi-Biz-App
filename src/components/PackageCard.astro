@@ -1,0 +1,24 @@
+---
+interface Props {
+	title: string;
+	slug: string;
+	highlights: string[];
+}
+
+const { title, slug, highlights } = Astro.props;
+---
+
+<article class="card">
+	<div class="icon-chip" aria-hidden="true">PKG</div>
+	<h3>{title}</h3>
+	<ul>
+		{
+			highlights.map((item) => (
+				<li>{item}</li>
+			))
+		}
+	</ul>
+	<p>
+		<a class="btn btn-secondary" href={slug}>View package</a>
+	</p>
+</article>

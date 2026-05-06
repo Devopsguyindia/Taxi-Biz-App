@@ -1,0 +1,45 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ContactForm from '../components/ContactForm.astro';
+import { siteConfig } from '../site-config';
+
+const seoPage = siteConfig.seo.pages.contact;
+const title = `${seoPage.title} | ${siteConfig.businessName}`;
+const description = seoPage.description;
+const keywords = seoPage.keywords;
+
+const jsonLd = {
+	'@context': 'https://schema.org',
+	'@type': 'ContactPage',
+	name: `${siteConfig.businessName} Contact`,
+	url: `${siteConfig.siteUrl}/contact/`,
+};
+---
+
+<BaseLayout title={title} description={description} keywords={keywords} path={seoPage.path} jsonLd={jsonLd}>
+	<section class="section container">
+		<h1>Contact and Booking</h1>
+		<p class="muted">Choose any quick method below and we will confirm availability with fare details.</p>
+		<div class="grid cards-3">
+			<article class="card">
+				<h2>Call</h2>
+				<p>
+					<a class="btn btn-primary" href={`tel:${siteConfig.phoneHref}`}>{siteConfig.phoneDisplay}</a>
+				</p>
+			</article>
+			<article class="card">
+				<h2>WhatsApp</h2>
+				<p>
+					<a class="btn btn-whatsapp" href={`https://wa.me/${siteConfig.whatsappNumber}`}>Start chat</a>
+				</p>
+			</article>
+			<article class="card">
+				<h2>Service Areas</h2>
+				<p>{siteConfig.serviceAreas.join(', ')}</p>
+			</article>
+		</div>
+		<section class="section">
+			<ContactForm />
+		</section>
+	</section>
+</BaseLayout>

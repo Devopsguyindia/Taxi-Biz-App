@@ -1,0 +1,22 @@
+---
+import { siteConfig } from '../site-config';
+---
+
+{
+	siteConfig.enableStickyActions && (
+		<div class="sticky-actions" aria-label="Quick mobile actions">
+			<a class="btn btn-primary" href={`tel:${siteConfig.phoneHref}`} aria-label="Call now">
+				Call Now
+			</a>
+			<a
+				class="btn btn-whatsapp"
+				href={`https://wa.me/${siteConfig.whatsappNumber}`}
+				target="_blank"
+				rel="noopener noreferrer"
+				aria-label="Chat on WhatsApp"
+			>
+				WhatsApp
+			</a>
+		</div>
+	)
+}

@@ -1,0 +1,62 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { siteConfig } from '../../site-config';
+
+const seoPage = siteConfig.seo.pages.airportTransfers;
+const title = `${seoPage.title} | ${siteConfig.businessName}`;
+const description = seoPage.description;
+const keywords = seoPage.keywords;
+
+const jsonLd = {
+	'@context': 'https://schema.org',
+	'@type': 'Service',
+	serviceType: 'Airport taxi transfer',
+	provider: {
+		'@type': 'TaxiService',
+		name: siteConfig.businessName,
+		telephone: siteConfig.phoneDisplay,
+	},
+	areaServed: siteConfig.serviceAreas,
+};
+---
+
+<BaseLayout
+	title={title}
+	description={description}
+	keywords={keywords}
+	path={seoPage.path}
+	jsonLd={jsonLd}
+>
+	<section class="section container">
+		<h1>Airport Pickup / Drop</h1>
+		<p class="muted">
+			On-time transfers for airport and key city routes. Share your travel time and we will confirm quickly.
+		</p>
+		<div class="grid">
+			<article class="card">
+				<h2>Pune Airport Transfers</h2>
+				<ul>
+					<li>Pune Airport - Day Hrs</li>
+					<li>Pune Airport - Night Hrs</li>
+				</ul>
+			</article>
+			<article class="card">
+				<h2>Pune - Mumbai Routes</h2>
+				<ul>
+					<li>Pune - Mumbai</li>
+					<li>Mumbai - Pune</li>
+				</ul>
+			</article>
+			<article class="card">
+				<h2>Pune - New Mumbai Routes</h2>
+				<ul>
+					<li>Pune - New Mumbai</li>
+					<li>New Mumbai - Pune</li>
+				</ul>
+			</article>
+		</div>
+		<p>
+			<a class="btn btn-primary" href="/contact/">Book airport package</a>
+		</p>
+	</section>
+</BaseLayout>

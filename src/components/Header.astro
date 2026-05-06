@@ -1,0 +1,49 @@
+---
+import { siteConfig } from '../site-config';
+
+const currentPath = Astro.url.pathname;
+const base = currentPath === '/' ? '' : '/';
+const navLinks = [
+	{ href: `${base}#home`, label: 'Home' },
+	{ href: `${base}#packages`, label: 'Packages' },
+	{ href: `${base}#routes`, label: 'Routes' },
+	{ href: `${base}#fleet`, label: 'Fleet' },
+	{ href: `${base}#contact`, label: 'Contact' },
+	{ href: `${base}#enquiry`, label: 'Enquiry' },
+];
+---
+
+<header class="site-header">
+	<div class="container header-inner">
+		<a class="brand" href="/">
+			<span class="brand-glow"></span>
+			{siteConfig.businessName}
+		</a>
+		<nav class="desktop-nav" aria-label="Main navigation">
+			{
+				navLinks.map((item) => (
+					<a class="section-link" data-section={item.href.split('#')[1]} href={item.href}>
+						{item.label}
+					</a>
+				))
+			}
+		</nav>
+		<div class="header-actions">
+			<button id="theme-toggle" class="btn btn-secondary btn-theme" type="button">Dark</button>
+			<a class="btn btn-primary btn-quote" href={`${base}#enquiry`}>Get Quote</a>
+		</div>
+		<details class="mobile-menu">
+			<summary aria-label="Toggle menu">Menu</summary>
+			<nav class="mobile-menu-content" aria-label="Mobile navigation">
+				<a class="mobile-top-cta section-link" data-section="enquiry" href={`${base}#enquiry`}>Get Quote</a>
+				{
+					navLinks.map((item) => (
+						<a class="section-link" data-section={item.href.split('#')[1]} href={item.href}>
+							{item.label}
+						</a>
+					))
+				}
+			</nav>
+		</details>
+	</div>
+</header>

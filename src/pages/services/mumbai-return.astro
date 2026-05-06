@@ -1,0 +1,56 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { siteConfig } from '../../site-config';
+
+const seoPage = siteConfig.seo.pages.mumbaiReturn;
+const title = `${seoPage.title} | ${siteConfig.businessName}`;
+const description = seoPage.description;
+const keywords = seoPage.keywords;
+
+const jsonLd = {
+	'@context': 'https://schema.org',
+	'@type': 'Service',
+	serviceType: 'Mumbai return taxi package',
+	provider: {
+		'@type': 'TaxiService',
+		name: siteConfig.businessName,
+	},
+	areaServed: ['Pune', 'Mumbai'],
+};
+---
+
+<BaseLayout
+	title={title}
+	description={description}
+	keywords={keywords}
+	path={seoPage.path}
+	jsonLd={jsonLd}
+>
+	<section class="section container">
+		<h1>Mumbai Return Package</h1>
+		<p class="muted">
+			Designed for travelers who need a planned Pune to Mumbai trip and return ride with one vehicle.
+		</p>
+		<div class="grid">
+			<article class="card">
+				<h2>Who this package fits</h2>
+				<ul>
+					<li>Business meetings with return on same day</li>
+					<li>Medical visits and scheduled appointments</li>
+					<li>Family visits with planned return timing</li>
+				</ul>
+			</article>
+			<article class="card">
+				<h2>Why choose this package</h2>
+				<ul>
+					<li>Single booking for both ways</li>
+					<li>Comfortable ride with your preferred vehicle type</li>
+					<li>Direct support via phone and WhatsApp</li>
+				</ul>
+			</article>
+		</div>
+		<p>
+			<a class="btn btn-primary" href="/contact/">Enquire Mumbai return package</a>
+		</p>
+	</section>
+</BaseLayout>
