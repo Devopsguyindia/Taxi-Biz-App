@@ -51,30 +51,48 @@ const formEndpoint = siteConfig.formEndpoint;
 </form>
 
 <script>
-	const form = document.getElementById('enquiryForm');
-	const formMessage = document.getElementById('formMessage');
-	const endpoint = form.dataset.endpoint;
+	const form = document.getElementById('enquiryForm') as HTMLFormElement;
+	const formMessage = document.getElementById('formMessage') as HTMLParagraphElement;
+	const endpoint = form?.dataset.endpoint;
 
-	form.addEventListener('submit', async (e) => {
+	if (!form || !formMessage || !endpoint) {
+		console.error('Form elements not found');
+	}
+
+	form?.addEventListener('submit', async (e) => {
 		e.preventDefault();
 		
+		const nameInput = form.querySelector('#name') as HTMLInputElement;
+		const phoneInput = form.querySelector('#phone') as HTMLInputElement;
+		const pickupInput = form.querySelector('#pickup') as HTMLInputElement;
+		const dropInput = form.querySelector('#drop') as HTMLInputElement;
+		const datetimeInput = form.querySelector('#datetime') as HTMLInputElement;
+		const packageTypeInput = form.querySelector('#packageType') as HTMLSelectElement;
+		const vehicleInput = form.querySelector('#vehicle') as HTMLSelectElement;
+		const messageInput = form.querySelector('#message') as HTMLTextAreaElement;
+		const submitBtn = form.querySelector('button[type="submit"]') as HTMLButtonElement;
+
+		if (!nameInput || !phoneInput || !pickupInput || !dropInput || !submitBtn) {
+			console.error('Form inputs not found');
+			return;
+		}
+
 		const formData = {
-			name: form.name.value,
-			phone: form.phone.value,
-			pickup: form.pickup.value,
-			drop_location: form.drop.value,
-			datetime: form.datetime.value,
-			packageType: form.packageType.value,
-			vehicle: form.vehicle.value,
-			message: form.message.value
+			name: nameInput.value,
+			phone: phoneInput.value,
+			pickup: pickupInput.value,
+			drop_location: dropInput.value,
+			datetime: datetimeInput?.value || '',
+			packageType: packageTypeInput?.value || 'Airport Pickup / Drop',
+			vehicle: vehicleInput?.value || 'Toyota Innova - SUV',
+			message: messageInput?.value || ''
 		};
 
-		const submitBtn = form.querySelector('button[type="submit"]');
 		submitBtn.disabled = true;
 		submitBtn.textContent = 'Sending...';
 
 		try {
-			const response = await fetch(endpoint, {
+			const response = await fetch(endpoint!, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
