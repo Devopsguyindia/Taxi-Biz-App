@@ -14,17 +14,21 @@ $db_name = 'taxi_biz_app';
 $db_user = 'taxi_app_user';  // Create this user using database-setup.sql
 $db_pass = 'Taxi@123!';  // Replace with actual password
 
-// CORS headers (if needed for cross-origin requests)
-header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: POST, OPTIONS');
-header('Access-Control-Allow-Headers: Content-Type');
-header('Content-Type: application/json');
-
-// Handle preflight OPTIONS request
+// Handle preflight OPTIONS request first (must be before any other headers)
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    header('Access-Control-Allow-Origin: *');
+    header('Access-Control-Allow-Methods: POST, OPTIONS');
+    header('Access-Control-Allow-Headers: Content-Type, Authorization');
+    header('Access-Control-Max-Age: 86400');
     http_response_code(200);
     exit();
 }
+
+// CORS headers for all other requests
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: POST, OPTIONS');
+header('Access-Control-Allow-Headers: Content-Type, Authorization');
+header('Content-Type: application/json');
 
 // Only allow POST requests
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
