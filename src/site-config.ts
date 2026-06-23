@@ -47,7 +47,7 @@ export const siteConfig = {
 	sameAs: [] as string[],
 	priceRange: '$$',
 	enableStickyActions: true,
-	formEndpoint: 'https://formspree.io/f/your-form-id',
+	formEndpoint: 'https://api.your-domain.com/api-submit-enquiry.php',
 	fleet: [
 		{
 			name: 'Toyota Innova',

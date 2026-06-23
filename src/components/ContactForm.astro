@@ -1,11 +1,11 @@
 ---
 import { siteConfig } from '../site-config';
+const formEndpoint = siteConfig.formEndpoint;
 ---
 
-<form class="card" action={siteConfig.formEndpoint} method="POST">
+<form class="card" id="enquiryForm" data-endpoint={formEndpoint}>
 	<h2>Quick Enquiry</h2>
 	<p class="muted">We will contact you shortly with fare details.</p>
-	<input type="hidden" name="_subject" value="New taxi enquiry from website" />
 	<p>
 		<label for="name">Name</label><br />
 		<input id="name" name="name" type="text" required />
@@ -47,4 +47,57 @@ import { siteConfig } from '../site-config';
 		<textarea id="message" name="message" rows={4}></textarea>
 	</p>
 	<button class="btn btn-primary" type="submit">Send enquiry</button>
+	<p id="formMessage" class="muted" style="margin-top: 10px;"></p>
 </form>
+
+<script>
+	const form = document.getElementById('enquiryForm');
+	const formMessage = document.getElementById('formMessage');
+	const endpoint = form.dataset.endpoint;
+
+	form.addEventListener('submit', async (e) => {
+		e.preventDefault();
+		
+		const formData = {
+			name: form.name.value,
+			phone: form.phone.value,
+			pickup: form.pickup.value,
+			drop_location: form.drop.value,
+			datetime: form.datetime.value,
+			packageType: form.packageType.value,
+			vehicle: form.vehicle.value,
+			message: form.message.value
+		};
+
+		const submitBtn = form.querySelector('button[type="submit"]');
+		submitBtn.disabled = true;
+		submitBtn.textContent = 'Sending...';
+
+		try {
+			const response = await fetch(endpoint, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(formData)
+			});
+
+			const data = await response.json();
+
+			if (response.ok && data.success) {
+				formMessage.textContent = 'Thank you! Your enquiry has been submitted successfully.';
+				formMessage.style.color = 'green';
+				form.reset();
+			} else {
+				formMessage.textContent = data.message || 'Failed to submit enquiry. Please try again.';
+				formMessage.style.color = 'red';
+			}
+		} catch (error) {
+			formMessage.textContent = 'Error submitting form. Please try again.';
+			formMessage.style.color = 'red';
+		} finally {
+			submitBtn.disabled = false;
+			submitBtn.textContent = 'Send enquiry';
+		}
+	});
+</script>
