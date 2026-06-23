@@ -1,6 +1,8 @@
 ---
+import Breadcrumbs from '../components/Breadcrumbs.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ContactForm from '../components/ContactForm.astro';
+import { absoluteUrl, buildBreadcrumbJsonLd } from '../lib/seo-schema';
 import { siteConfig } from '../site-config';
 
 const seoPage = siteConfig.seo.pages.contact;
@@ -8,15 +10,24 @@ const title = `${seoPage.title} | ${siteConfig.businessName}`;
 const description = seoPage.description;
 const keywords = seoPage.keywords;
 
-const jsonLd = {
-	'@context': 'https://schema.org',
-	'@type': 'ContactPage',
-	name: `${siteConfig.businessName} Contact`,
-	url: `${siteConfig.siteUrl}/contact/`,
-};
+const crumbs = [
+	{ name: 'Home', path: '/' },
+	{ name: seoPage.title, path: seoPage.path },
+];
+
+const jsonLd = [
+	buildBreadcrumbJsonLd(crumbs),
+	{
+		'@context': 'https://schema.org',
+		'@type': 'ContactPage',
+		name: `${siteConfig.businessName} Contact`,
+		url: absoluteUrl('/contact/'),
+	},
+];
 ---
 
 <BaseLayout title={title} description={description} keywords={keywords} path={seoPage.path} jsonLd={jsonLd}>
+	<Breadcrumbs items={crumbs} />
 	<section class="section container">
 		<h1>Contact and Booking</h1>
 		<p class="muted">Choose any quick method below and we will confirm availability with fare details.</p>
@@ -38,6 +49,15 @@ const jsonLd = {
 				<p>{siteConfig.serviceAreas.join(', ')}</p>
 			</article>
 		</div>
+		<section class="section">
+			<h2>Popular booking routes</h2>
+			<ul class="internal-links">
+				<li><a href="/routes/pune-to-mumbai-taxi/">Pune to Mumbai taxi</a></li>
+				<li><a href="/routes/mumbai-airport-drop/">Mumbai airport drop</a></li>
+				<li><a href="/routes/pune-airport-taxi/">Pune airport taxi</a></li>
+				<li><a href="/routes/new-mumbai-pune-taxi/">New Mumbai ↔ Pune taxi</a></li>
+			</ul>
+		</section>
 		<section class="section">
 			<ContactForm />
 		</section>

@@ -1,5 +1,7 @@
 ---
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { buildBreadcrumbJsonLd } from '../../lib/seo-schema';
 import { siteConfig } from '../../site-config';
 
 const seoPage = siteConfig.seo.pages.mumbaiReturn;
@@ -7,16 +9,24 @@ const title = `${seoPage.title} | ${siteConfig.businessName}`;
 const description = seoPage.description;
 const keywords = seoPage.keywords;
 
-const jsonLd = {
-	'@context': 'https://schema.org',
-	'@type': 'Service',
-	serviceType: 'Mumbai return taxi package',
-	provider: {
-		'@type': 'TaxiService',
-		name: siteConfig.businessName,
+const crumbs = [
+	{ name: 'Home', path: '/' },
+	{ name: seoPage.title, path: seoPage.path },
+];
+
+const jsonLd = [
+	buildBreadcrumbJsonLd(crumbs),
+	{
+		'@context': 'https://schema.org',
+		'@type': 'Service',
+		serviceType: 'Mumbai return taxi package',
+		provider: {
+			'@type': 'TaxiService',
+			name: siteConfig.businessName,
+		},
+		areaServed: ['Pune', 'Mumbai'],
 	},
-	areaServed: ['Pune', 'Mumbai'],
-};
+];
 ---
 
 <BaseLayout
@@ -26,6 +36,7 @@ const jsonLd = {
 	path={seoPage.path}
 	jsonLd={jsonLd}
 >
+	<Breadcrumbs items={crumbs} />
 	<section class="section container">
 		<h1>Mumbai Return Package</h1>
 		<p class="muted">
@@ -49,6 +60,10 @@ const jsonLd = {
 				</ul>
 			</article>
 		</div>
+		<p class="muted">
+			Pair with <a href="/routes/pune-to-mumbai-taxi/">Pune to Mumbai taxi</a> for one-way legs or
+			<a href="/fleet/">choose a vehicle</a> first.
+		</p>
 		<p>
 			<a class="btn btn-primary" href="/contact/">Enquire Mumbai return package</a>
 		</p>

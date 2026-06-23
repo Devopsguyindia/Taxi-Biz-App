@@ -10,16 +10,29 @@ interface Props {
 	description: string;
 	path: string;
 	keywords?: string[];
+	ogImage?: string;
 	jsonLd?: Record<string, unknown> | Record<string, unknown>[];
 }
 
-const { title, description, path, keywords = siteConfig.seo.defaultKeywords, jsonLd = [] } = Astro.props;
+const {
+	title,
+	description,
+	path,
+	keywords = siteConfig.seo.defaultKeywords,
+	ogImage: ogImageProp,
+	jsonLd = [],
+} = Astro.props;
 const canonicalUrl = new URL(path, siteConfig.siteUrl).toString();
+const baseSite = siteConfig.siteUrl.replace(/\/$/, '');
+const ogImage =
+	ogImageProp ||
+	(siteConfig.seo.ogImage ? siteConfig.seo.ogImage.replace(/\/$/, '') : '') ||
+	`${baseSite}/favicon.svg`;
 const ldItems = Array.isArray(jsonLd) ? jsonLd : [jsonLd];
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en-IN">
 	<head>
 		<meta charset="utf-8" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -35,9 +48,12 @@ const ldItems = Array.isArray(jsonLd) ? jsonLd : [jsonLd];
 		<meta property="og:title" content={title} />
 		<meta property="og:description" content={description} />
 		<meta property="og:url" content={canonicalUrl} />
+		<meta property="og:image" content={ogImage} />
+		<meta property="og:locale" content="en_IN" />
 		<meta name="twitter:card" content="summary_large_image" />
 		<meta name="twitter:title" content={title} />
 		<meta name="twitter:description" content={description} />
+		<meta name="twitter:image" content={ogImage} />
 		<script is:inline>
 			(() => {
 				const stored = localStorage.getItem('theme');

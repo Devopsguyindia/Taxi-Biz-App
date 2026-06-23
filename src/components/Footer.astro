@@ -3,7 +3,7 @@ import { siteConfig } from '../site-config';
 ---
 
 <footer class="site-footer">
-	<div class="container grid cards-3">
+	<div class="container grid footer-grid">
 		<section>
 			<h2>{siteConfig.businessName}</h2>
 			<p class="muted">
@@ -22,6 +22,15 @@ import { siteConfig } from '../site-config';
 		<section>
 			<h2>Service Areas</h2>
 			<p>{siteConfig.serviceAreas.join(', ')}</p>
+		</section>
+		<section>
+			<h2>Popular routes</h2>
+			<ul class="footer-links">
+				<li><a href="/routes/pune-to-mumbai-taxi/">Pune to Mumbai taxi</a></li>
+				<li><a href="/routes/mumbai-airport-drop/">Mumbai airport drop</a></li>
+				<li><a href="/routes/pune-airport-taxi/">Pune airport taxi</a></li>
+				<li><a href="/routes/new-mumbai-pune-taxi/">New Mumbai ↔ Pune</a></li>
+			</ul>
 		</section>
 	</div>
 </footer>

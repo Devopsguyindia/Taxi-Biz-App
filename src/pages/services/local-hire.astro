@@ -1,5 +1,7 @@
 ---
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { buildBreadcrumbJsonLd } from '../../lib/seo-schema';
 import { siteConfig } from '../../site-config';
 
 const seoPage = siteConfig.seo.pages.localHire;
@@ -7,19 +9,28 @@ const title = `${seoPage.title} | ${siteConfig.businessName}`;
 const description = seoPage.description;
 const keywords = seoPage.keywords;
 
-const jsonLd = {
-	'@context': 'https://schema.org',
-	'@type': 'Service',
-	serviceType: 'Local taxi hire',
-	provider: {
-		'@type': 'TaxiService',
-		name: siteConfig.businessName,
+const crumbs = [
+	{ name: 'Home', path: '/' },
+	{ name: seoPage.title, path: seoPage.path },
+];
+
+const jsonLd = [
+	buildBreadcrumbJsonLd(crumbs),
+	{
+		'@context': 'https://schema.org',
+		'@type': 'Service',
+		serviceType: 'Local taxi hire',
+		provider: {
+			'@type': 'TaxiService',
+			name: siteConfig.businessName,
+		},
+		areaServed: ['Pune'],
 	},
-	areaServed: ['Pune'],
-};
+];
 ---
 
 <BaseLayout title={title} description={description} keywords={keywords} path={seoPage.path} jsonLd={jsonLd}>
+	<Breadcrumbs items={crumbs} />
 	<section class="section container">
 		<h1>Local Hire Package</h1>
 		<p class="muted">
@@ -39,6 +50,10 @@ const jsonLd = {
 				<p>Innova, Ertiga, and Swift Dzire available based on comfort and budget.</p>
 			</article>
 		</div>
+		<p class="muted">
+			Also see <a href="/fleet/">fleet & vehicle types</a> and
+			<a href="/routes/pune-to-mumbai-taxi/">Pune–Mumbai taxi</a> for intercity travel.
+		</p>
 		<p>
 			<a class="btn btn-primary" href="/contact/">Get local hire quote</a>
 		</p>

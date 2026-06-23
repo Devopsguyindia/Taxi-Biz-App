@@ -1,6 +1,8 @@
 ---
+import Breadcrumbs from '../components/Breadcrumbs.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import VehicleCard from '../components/VehicleCard.astro';
+import { buildBreadcrumbJsonLd } from '../lib/seo-schema';
 import { siteConfig } from '../site-config';
 
 const seoPage = siteConfig.seo.pages.fleet;
@@ -8,19 +10,28 @@ const title = `${seoPage.title} | ${siteConfig.businessName}`;
 const description = seoPage.description;
 const keywords = seoPage.keywords;
 
-const jsonLd = {
-	'@context': 'https://schema.org',
-	'@type': 'ItemList',
-	name: 'Taxi Fleet',
-	itemListElement: siteConfig.fleet.map((vehicle, index) => ({
-		'@type': 'ListItem',
-		position: index + 1,
-		name: `${vehicle.name} - ${vehicle.type}`,
-	})),
-};
+const crumbs = [
+	{ name: 'Home', path: '/' },
+	{ name: seoPage.title, path: seoPage.path },
+];
+
+const jsonLd = [
+	buildBreadcrumbJsonLd(crumbs),
+	{
+		'@context': 'https://schema.org',
+		'@type': 'ItemList',
+		name: 'Taxi Fleet',
+		itemListElement: siteConfig.fleet.map((vehicle, index) => ({
+			'@type': 'ListItem',
+			position: index + 1,
+			name: `${vehicle.name} - ${vehicle.type}`,
+		})),
+	},
+];
 ---
 
 <BaseLayout title={title} description={description} keywords={keywords} path={seoPage.path} jsonLd={jsonLd}>
+	<Breadcrumbs items={crumbs} />
 	<section class="section container">
 		<h1>Our Vehicles</h1>
 		<p class="muted">Well-maintained options for solo travelers, families, and corporate bookings.</p>
@@ -38,5 +49,11 @@ const jsonLd = {
 				))
 			}
 		</div>
+		<p class="muted">
+			Booking a route? Start with
+			<a href="/routes/pune-to-mumbai-taxi/">Pune–Mumbai taxi</a>,
+			<a href="/routes/pune-airport-taxi/">Pune airport taxi</a>, or
+			<a href="/contact/">contact us</a>.
+		</p>
 	</section>
 </BaseLayout>
