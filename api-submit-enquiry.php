@@ -12,7 +12,7 @@
 $db_host = 'localhost';
 $db_name = 'taxi_biz_app';
 $db_user = 'taxi_app_user';  // Create this user using database-setup.sql
-$db_pass = 'your_secure_password';  // Replace with actual password
+$db_pass = 'Taxi@123!';  // Replace with actual password
 
 // CORS headers (if needed for cross-origin requests)
 header('Access-Control-Allow-Origin: *');
